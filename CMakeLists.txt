@@ -23,6 +23,22 @@
 cmake_minimum_required(VERSION 2.8)
 project(onboardsdk)
 
+###交叉编译
+set(CMAKE_SYSTEM_NAME linux)
+set(CMAKE_SYSTEM_PROCESSOR  arm)
+set(CMAKE_SIZEOF_VOID_P 4)
+set(CMAKE_SYSROOT  $ENV{SDKTARGETSYSROOT})
+# set(CMAKE_C_COMPILER  arm-poky-linux-gnueabi-gcc)
+# set(CMAKE_CXX_COMPILER  arm-poky-linux-gnueabi-g++)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_C_FLAGS -fPIC --sysroot=$ENV{SDKTARGETSYSROOT} -mfloat-abi=hard)
+set(CMAKE_CXX_FLAGS -fPIC)
+set(CMAKE_MODULE_LINKER_FLAGS -lrt -lm -ldl)
+include_directories(/home/xmark/imx6ul/dji/install/include)
+include_directories(/home/xmark/imx6ul/dji/install/include/libusb-1.0)
+link_directories(/home/xmark/imx6ul/dji/install/lib)
+###
+
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 set(DJIOSDK 0)
@@ -54,21 +70,23 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/libs)
 
-set(ADVANCED_SENSING 1)
-set(WAYPT2_CORE 1)
+# set(ADVANCED_SENSING 1)
+# set(WAYPT2_CORE 1)
 
-if (ADVANCED_SENSING)
-  add_definitions(-DADVANCED_SENSING)
-endif()
+# if (ADVANCED_SENSING)
+#   add_definitions(-DADVANCED_SENSING)
+# endif()
 
-if (WAYPT2_CORE)
-    add_definitions(-DWAYPT2_CORE)
-endif()
+# if (WAYPT2_CORE)
+#     add_definitions(-DWAYPT2_CORE)
+# endif()
 
 add_subdirectory(osdk-core)
-if (${CMAKE_SYSTEM_NAME} MATCHES Linux)
-  add_subdirectory(sample/platform/linux)
-endif()
+
+message("ARCH=" ${ARCH})
+# if (${CMAKE_SYSTEM_NAME} MATCHES Linux)
+#   add_subdirectory(sample/platform/linux)
+# endif()
 
 #[[
 INSTALL(DIRECTORY osdk-lib/${ARCH}/osdk-core/inc/

@@ -129,7 +129,7 @@ add_library(${PROJECT_NAME}
         STATIC
         ${OSDK_LIB_SRCS})
 
-add_subdirectory(advanced-sensing)
+# add_subdirectory(advanced-sensing)
 
 
 set(ADVANCED_SENSING_SOURCE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/advanced-sensing)
